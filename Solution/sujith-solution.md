@@ -19,14 +19,6 @@ Add the RabbitMQ secret in `values.yaml`
 
 ---------
 
-## Dry run command
-```sh
-# clone this repository
-helm install sujith-workshp . --dry-run > dryruns/sujith.yaml
-```
-
----------
-
 ## Fix all the lint errors
 ```
 eksdemo> helm lint .
