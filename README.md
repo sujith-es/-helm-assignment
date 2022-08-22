@@ -8,7 +8,7 @@ You need to setup [Helm](https://github.com/helm/helm) on a workshop Kubernetes 
 
 ```sh
 # clone this repository
-git clone https://github.com/sujith-es/eksdemo
+git clone https://github.com/sujith-es/helm-assignment/
 
 # change working directory
 cd eksdemo
