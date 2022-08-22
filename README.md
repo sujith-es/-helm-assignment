@@ -93,4 +93,11 @@ REVISION	UPDATED                 	STATUS    	CHART        	DESCRIPTION
 
 ```text
 helm rollback eksdemo
-```# -helm-assignment
+```
+
+
+### Unistall the Helm chart
+
+```text
+helm uninstall eksdemo
+```
