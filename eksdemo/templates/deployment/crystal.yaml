@@ -44,7 +44,7 @@ spec:
               path: /crystal
               port: http
           resources:
-{{ toYaml .Values.resources | indent 12  }}
+{{ toYaml .Values.resources | indent 120  }}
     {{- with .Values.nodeSelector }}
       nodeSelector:
 {{ toYaml . | indent 8 }}
