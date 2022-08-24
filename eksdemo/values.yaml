@@ -2,6 +2,7 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+
 replicaCount: 1
 
 strategy:
@@ -45,4 +46,4 @@ fullnameOverride: ""
 
 rabbitMQ:
   secretName: "rabbitmq-default-secret"
-  password: "CHANGEME"
+  password: "R9KJJ0blnOiub8vA"
