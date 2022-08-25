@@ -6,7 +6,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ $fullName XXXXXXXXXX }}
+  name: {{ $fullName }}
   labels:
     app.kubernetes.io/name: {{ $appName }}
     helm.sh/chart: {{ include "eksdemo.chart" . }}
@@ -51,7 +51,7 @@ spec:
               path: /
               port: http
           resources:
-{{ toYaml .Values.resources | indent 12 -- }}
+{{ toYaml .Values.resources | indent 12 }}
     {{- with .Values.nodeSelector }}
       nodeSelector:
 {{ toYaml . | indent 8 }}

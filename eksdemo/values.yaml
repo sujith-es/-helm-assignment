@@ -45,4 +45,4 @@ fullnameOverride: ""
 
 rabbitMQ:
   secretName: "rabbitmq-default-secret"
-  password: "CHANGEME"
+  password: "bwej6n5flzLFDa5T"
