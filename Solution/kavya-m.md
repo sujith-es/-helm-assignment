@@ -7,15 +7,15 @@ This repository contains a Helm chart for the UST Workshop demo application.
 ---------
 Below is the empty `secret.yaml` file. Add the Helm code to generate secret. The secret should be base 64 encoded and quotes added.
 
-![Alt text](/images/secret-file.png?raw=true "Title")
+![Alt text](/images/secret-file-kavyam.png?raw=true "Title")
 
 Add the RabbitMQ secret in `values.yaml`
 
-![Alt text](/images/rabbitmq-secret.png?raw=true "Title")
+![Alt text](/images/rabbitmq-secret-kavyam.png?raw=true "Title")
 
 <b>The final secret should be as below</b>. Use Dry run commanda below to get the final yaml to verify.
 
-![Alt text](/images/secret-solution.png?raw=true "Title")
+![Alt text](/images/secret-solution-kavyam.png?raw=true "Title")
 
 ---------
 

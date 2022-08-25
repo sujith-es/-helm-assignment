@@ -1,0 +1,239 @@
+NAME: testkavyam1
+LAST DEPLOYED: Thu Aug 25 12:26:02 2022
+NAMESPACE: default
+STATUS: pending-install
+REVISION: 1
+TEST SUITE: None
+HOOKS:
+MANIFEST:
+---
+# Source: eksdemo/templates/secrets/secret.yaml
+apiVersion: v1
+data:
+  rabbitmq-password: YndlajZuNWZsekxGRGE1VA==
+kind: Secret
+metadata:
+  labels:
+    app.kubernetes.io/instance: testkavyam1
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: rabbitmq
+    helm.sh/chart: rabbitmq-10.3.0
+  name: testkavyam1-rabbitmq
+  namespace: default
+type: Opaque
+---
+# Source: eksdemo/templates/service/crystal.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: testkavyam1-eksdemo-crystal
+  labels:
+    app.kubernetes.io/name: eksdemo-crystal
+    helm.sh/chart: eksdemo-0.1.0
+    app.kubernetes.io/instance: testkavyam1
+    app.kubernetes.io/managed-by: Helm
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: 3000
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: eksdemo-crystal
+    app.kubernetes.io/instance: testkavyam1
+---
+# Source: eksdemo/templates/service/frontend.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: testkavyam1-eksdemo-frontend
+  labels:
+    app.kubernetes.io/name: eksdemo-frontend
+    helm.sh/chart: eksdemo-0.1.0
+    app.kubernetes.io/instance: testkavyam1
+    app.kubernetes.io/managed-by: Helm
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80
+      targetPort: 3000
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: eksdemo-frontend
+    app.kubernetes.io/instance: testkavyam1
+---
+# Source: eksdemo/templates/service/nodejs.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: testkavyam1-eksdemo-nodejs
+  labels:
+    app.kubernetes.io/name: eksdemo-nodejs
+    helm.sh/chart: eksdemo-0.1.0
+    app.kubernetes.io/instance: testkavyam1
+    app.kubernetes.io/managed-by: Helm
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: 3000
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: eksdemo-nodejs
+    app.kubernetes.io/instance: testkavyam1
+---
+# Source: eksdemo/templates/deployment/crystal.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: testkavyam1-eksdemo-crystal
+  labels:
+    app.kubernetes.io/name: eksdemo-crystal
+    helm.sh/chart: eksdemo-0.1.0
+    app.kubernetes.io/instance: testkavyam1
+    app.kubernetes.io/managed-by: Helm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: eksdemo-crystal
+      app.kubernetes.io/instance: testkavyam1
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: eksdemo-crystal
+        app.kubernetes.io/instance: testkavyam1
+    spec:
+      containers:
+        - name: eksdemo-crystal
+          image: "brentley/ecsdemo-crystal:latest"
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 3000
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /crystal
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /crystal
+              port: http
+          resources:
+                                                                                                                        null
+---
+# Source: eksdemo/templates/deployment/frontend.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: testkavyam1-eksdemo-frontend
+  labels:
+    app.kubernetes.io/name: eksdemo-frontend
+    helm.sh/chart: eksdemo-0.1.0
+    app.kubernetes.io/instance: testkavyam1
+    app.kubernetes.io/managed-by: Helm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: eksdemo-frontend
+      app.kubernetes.io/instance: testkavyam1
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: eksdemo-frontend
+        app.kubernetes.io/instance: testkavyam1
+    spec:
+      containers:
+        - name: eksdemo-frontend
+          image: "brentley/ecsdemo-frontend:latest"
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 3000
+              protocol: TCP
+          env:
+            - name: CRYSTAL_URL
+              value: "http://eksdemo-crystal.default.svc.cluster.local/crystal"
+            - name: NODEJS_URL
+              value: "http://eksdemo-nodejs.default.svc.cluster.local/"
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+          resources:
+            null
+---
+# Source: eksdemo/templates/deployment/nodejs.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: testkavyam1-eksdemo-nodejs
+  labels:
+    app.kubernetes.io/name: eksdemo-nodejs
+    helm.sh/chart: eksdemo-0.1.0
+    app.kubernetes.io/instance: testkavyam1
+    app.kubernetes.io/managed-by: Helm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: eksdemo-nodejs
+      app.kubernetes.io/instance: testkavyam1
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: eksdemo-nodejs
+        app.kubernetes.io/instance: testkavyam1
+    spec:
+      containers:
+        - name: eksdemo-nodejs
+          image: "brentley/ecsdemo-nodejs:latest"
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 3000
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+          resources:
+            null
+
+NOTES:
+Get the application URL by running these commands:
+
+  NOTE: It may take a few minutes for the LoadBalancer IP to be available.
+        You can watch the status of by running 'kubectl get svc -w testkavyam1-eksdemo-frontend'
+
+export SERVICE_URL=$(kubectl get svc --namespace default testkavyam1-eksdemo-frontend -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')
+
+echo http://$SERVICE_URL:80
